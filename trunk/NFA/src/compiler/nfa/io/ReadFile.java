@@ -6,9 +6,10 @@ import compiler.nfa.util.Priority;
 
 public class ReadFile {
      private  String file;
-     int row=0;
+     public static int row=0;
 	private static ReadFile readFile;
      static {
+    	 
     	 readFile = new ReadFile();
      }
      
@@ -27,8 +28,11 @@ public class ReadFile {
  	
  	public Character getNextChar(){
  		if(row==file.length()){
+ 			
  			return null;
  		}
+ 		System.out.println("filelength="+file.length());
+ 		System.out.println("row="+row);
  		return ReadFile.getReadFile().file.charAt(row++);
  		
  	}

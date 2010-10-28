@@ -3,6 +3,7 @@ package compiler.nfa;
 import java.util.LinkedList;
 import compiler.nfa.entity.NFA;
 import compiler.nfa.io.ReadFile;
+import compiler.util.MyLinkedList;
 
 
 public class RtoNfa {
@@ -10,26 +11,36 @@ public class RtoNfa {
 	
 	int weight=0;//定义每个状态的权值
 	ReadFile rf=ReadFile.getReadFile();
+//	ReadFile rf=new ReadFile();
 	Character c;
 	StringBuffer sb=new StringBuffer();
-	LinkedList<NFA> NFAlist=new LinkedList<NFA>();//这个链式队列用来存放状态转换的NFA
+//	LinkedList<NFA> NFAlist=new LinkedList<NFA>();//这个链式队列用来存放状态转换的NFA
+	LinkedList<NFA> NFAlist ;
 	LinkedList<Character> charlist=new LinkedList<Character>();
 	LinkedList<NFA> otherlist=new LinkedList<NFA>();//用来存放临时的NFA
 	
 	public RtoNfa(String file){
+		System.out.println("file="+file);
 		rf.setFile(file);//更换正规式为去除括号了的后缀表达式
-		NFA x=new NFA();
+		NFAlist=MyLinkedList.getNFAlist();
+		
+//		NFA x=new NFA();
 //    	x.setFrom(weight);
 //    	x.setReceive('#');
 //    	x.setTo(++weight);
-    	NFAlist.add(x);//先放入一个初始状态
+//    	NFAlist.add(x);//先放入一个初始状态
 	}
 	
 	
 	
     public void go(){//将isCorrect()处理后得到的字符串传过来
     	c=rf.getNextChar();
-      if(c!='.'&&c!='*'&&c!='|'){
+    	System.out.println("读到了字符"+c);
+    	if(c==null){
+    		return;
+    	}
+    	else if(c!='.'&&c!='*'&&c!='|'){
+    		System.out.println("存入字符"+c);
     	 charlist.add(c);
        }else if(c=='.'&&rf.getCurrentChar()!='|'){
     	    
@@ -122,7 +133,7 @@ public class RtoNfa {
          		}
          		NFAlist.add(otherlist.getFirst());
          	}
-         	if(rf.getCurrentChar()=='|'){
+         	if(rf.getCurrentChar()=='*'){
 //         		Character to2=NFAlist.peekLast().getTo().charAt(0);
             	Character receive2=NFAlist.peekLast().getReceive().charAt(0);
             	Character from2 = NFAlist.peekLast().getFrom().charAt(0);
@@ -134,8 +145,8 @@ public class RtoNfa {
     	   
        
      
-      if(rf.getNextChar()!=null){//递归调用自己
+        //递归调用自己
            go();
-      }
+      
     }
 }
