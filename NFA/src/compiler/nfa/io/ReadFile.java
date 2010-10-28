@@ -41,6 +41,11 @@ public class ReadFile {
  		}
  		return ReadFile.getReadFile().file.charAt(--row);
  	}
+ 	
+ 	public int returnto(int i){
+ 		
+ 		return row=row-i;
+ 	}
  	 static Character c;
 	public static  String isCorrect(){
 		Stack<Character> stack= new Stack<Character>();
