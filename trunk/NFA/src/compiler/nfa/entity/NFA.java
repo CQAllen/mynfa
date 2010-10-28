@@ -1,29 +1,29 @@
  package compiler.nfa.entity;
 
 public class NFA {
-	int from;
-	int to;
-	char receive;
-	
-	
-	public int getFrom() {
+	StringBuffer from;
+	StringBuffer to;
+	StringBuffer receive;
+	public StringBuffer getFrom() {
 		return from;
 	}
-	public void setFrom(int from) {
+	public void setFrom(StringBuffer from) {
 		this.from = from;
 	}
-	public int getTo() {
+	public StringBuffer getTo() {
 		return to;
 	}
-	public void setTo(int to) {
+	public void setTo(StringBuffer to) {
 		this.to = to;
 	}
-	public char getReceive() {
+	public StringBuffer getReceive() {
 		return receive;
 	}
-	public void setReceive(char receive) {
+	public void setReceive(StringBuffer receive) {
 		this.receive = receive;
 	}
+	
+
 	
 
 }
