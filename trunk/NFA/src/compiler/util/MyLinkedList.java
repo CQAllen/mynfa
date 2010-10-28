@@ -12,6 +12,7 @@ public class MyLinkedList extends LinkedList<NFA>{
 	static{
 		NFAlist=new MyLinkedList();
 	}
+	//dfdf
    public  static MyLinkedList getNFAlist(){
 	   return NFAlist;
    }
