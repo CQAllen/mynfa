@@ -41,23 +41,24 @@ public class NFAtoDFA {
 		Temp_list = new LinkedList<Character>();
 		Change(States_Set.getFirst(), 'b', Temp_list);
 		System.out.println(States_Set.size());
-		for(int k=0;k<States_Set.size();k++)
+		for (int k = 0; k < States_Set.size(); k++)
 			Print(States_Set.get(k));
 	}
 
 	private static void addStates_Set(LinkedList<Character> tempList) {// 插入DFA状态集,重复的不会被插入
 		// TODO Auto-generated method stub
 		for (int m = 0; m < States_Set.size(); m++) {
-			if(States_Set.size() == tempList.size())
-			for (int n = 0; n < States_Set.get(m).size(); n++)
-				if (States_Set.get(m).get(n)==tempList.get(n)) {
-//					States_Set.add(tempList);
-//					System.out.println("");
-					continue;
-				} else {
-					break;
-				}
-			else continue;
+			if (States_Set.size() == tempList.size())
+				for (int n = 0; n < States_Set.get(m).size(); n++)
+					if (States_Set.get(m).get(n) == tempList.get(n)) {
+						// States_Set.add(tempList);
+						// System.out.println("");
+						continue;
+					} else {
+						break;
+					}
+			else
+				continue;
 		}
 		States_Set.add(tempList);
 	}
