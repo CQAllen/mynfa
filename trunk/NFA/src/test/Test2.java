@@ -1,5 +1,7 @@
 package test;
 
+import java.util.LinkedList;
+
 import compiler.DFA.entity.DFA;
 import compiler.nfa.NFAtoDFA;
 import compiler.nfa.entity.NFA;
@@ -48,13 +50,13 @@ public class Test2 {
 		Cur.setReceive(new StringBuffer().append("#ab"));
 		Cur.setTo(new StringBuffer().append("#66"));
 		List.add(Cur);
-		System.out.println(List.size());
-		NFAtoDFA NtD=new NFAtoDFA();
-		DFA Start_dfa=new DFA();
-		NtD.setList(List);
-		Start_dfa=NtD.Clourse((NFA) List.getFirst(),Start_dfa);
-		System.out.println(Start_dfa.getStates().toString());
-//		NtD.Change(cur, ch);
+		NFAtoDFA.run(List);
+//		System.out.println(List.size());
+//		LinkedList<Character> Start_dfa_list=new LinkedList<Character>();
+//		NFAtoDFA.setList(List);
+//		Start_dfa_list=NFAtoDFA.Clourse((NFA) List.getFirst(),Start_dfa_list);
+//		for(int index=0;index<Start_dfa_list.size();index++)
+//		System.out.print(Start_dfa_list.get(index).toString());
 		
 		
 	}
