@@ -8,18 +8,18 @@ import java.util.LinkedList;
  */
 
 public class DFA {
-	private StringBuffer States;
+	private LinkedList<Character> States;
 	private String DFA_Name;
 	private boolean IsStart;
 	private boolean IsEnd;
 
-	public StringBuffer getStates() {
+	public LinkedList<Character> getStates() {
 		if(States==null)
-			States=new StringBuffer();
+			States=new LinkedList<Character>();
 		return States;
 	}
 
-	public void setStates(StringBuffer states) {
+	public void setStates(LinkedList<Character> states) {
 		this.States = states;
 	}
 
