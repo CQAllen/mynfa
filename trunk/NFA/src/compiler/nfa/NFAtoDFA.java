@@ -15,7 +15,7 @@ import compiler.util.MyLinkedList;
 public class NFAtoDFA {
 	// static NFA Cur = new NFA();
 	private static MyLinkedList List;
-	private static LinkedList<LinkedList> States_Set = new LinkedList<LinkedList>();// DFA状态集
+	private static LinkedList<LinkedList<Character>> States_Set = new LinkedList<LinkedList<Character>>();// DFA状态集
 	static int i;// 用于定位在NFA集合里的位置的指针
 	static int j;// 用于定位在NFA里的第几条元组的指针
 
