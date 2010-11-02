@@ -26,17 +26,17 @@ public class Priority {
 		
 		case '.':if(c2=='.'||c2==')'||c2=='|'||c2=='#'){
 			         return 2;
-		          }else if(c2=='('){
+		          }else if(c2=='('||c2=='*'){
 		        	  return 0;
 		          }
 		
 		case '|':if(c2==')'||c2=='|'||c2=='#'){
 	         return 2;
-         }else if(c2=='('||c2=='.'){
+         }else if(c2=='('||c2=='.'||c2=='*'){
        	  return 0;
          }
 		
-		case '(':if(c2=='.'||c2=='|'||c2=='('){
+		case '(':if(c2=='.'||c2=='|'||c2=='('||c2=='*'){
 	         return 0;
         }else if(c2==')'){
         	
@@ -46,21 +46,25 @@ public class Priority {
         	return -1;
         }
 		
-		case ')':if(c2=='.'||c2=='|'||c2=='('||c2=='#'){
+		case ')':if(c2=='.'||c2=='|'||c2=='('||c2=='#'||c2=='*'){
 	         return 2;
        }else if(c2==')'){
      	  return -1;
        }
 		
-		case '#':if(c2=='.'||c2=='|'||c2=='('){
+		case '#':if(c2=='.'||c2=='|'||c2=='('||c2=='*'){
 			
 	         return 0;
       }else if(c2==')'){
     	   return -1;
       }else if(c2=='#'){
     	  return 1;
-      }
-       
+       }
+		case '*': if(c2=='.'||c2=='|'||c2==')'||c2=='*'||c2=='#'||c2=='*'){
+			return 2;
+		}else if(c2=='('){
+			return -1;
+		}
 		}
 		System.out.println("return 5");
 		return 5;

@@ -37,6 +37,10 @@ public class ReadFile {
  		
  	}
  	public Character getCurrentChar(){
+	if(row==file.length()){
+ 			
+ 			return null;
+ 		}
  		return ReadFile.getReadFile().file.charAt(row);
  	}
  	public Character getLastChar(){
