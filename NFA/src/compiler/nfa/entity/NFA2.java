@@ -5,7 +5,7 @@ public class NFA2 {
 	private char get;
 	private int end;
 	
-	
+	//
 	public int getStart() {
 		return start;
 	}

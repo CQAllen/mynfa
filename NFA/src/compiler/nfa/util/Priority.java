@@ -19,7 +19,7 @@ public class Priority {
 		 * 如果c1优先级等于c2就返回1
 		 * 如果c1优先级小与c2就返回0
 		 * 错误返回-1
-		
+		jj
 		 */
 		switch (c1){
 		

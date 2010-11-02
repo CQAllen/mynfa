@@ -1,7 +1,7 @@
 package compiler.nfa.io;
 
 import java.util.Stack;
-
+/**/
 import compiler.nfa.util.Priority;
 
 public class ReadFile {

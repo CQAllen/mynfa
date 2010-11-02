@@ -1,7 +1,7 @@
 package test;
 
-import compiler.nfa.RtoNfa;
-import compiler.nfa.entity.NFA;
+import compiler.nfa.R2NFA;
+import compiler.nfa.entity.NFA2;
 import compiler.nfa.io.ReadFile;
 import compiler.util.MyLinkedList;
 
@@ -14,8 +14,8 @@ public class Test1 {
 		String file=ReadFile.isCorrect();
 		System.out.println(file);
 		ReadFile.row=0;
-		new RtoNfa(file).go();
-		NFA nfa;
+		new R2NFA(file).go();
+		NFA2 nfa;
 		System.out.println("存放NFA的队列长度:"+MyLinkedList.getNFAlist().size());
 		System.out.println(MyLinkedList.getNFAlist().getFirst().toString());
 //		for(int i=0;i<MyLinkedList.getNFAlist().size();i++){
