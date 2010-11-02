@@ -9,7 +9,7 @@ import compiler.nfa.io.ReadFile;
 import compiler.util.MyLinkedList;
 
 public class R2NFA {
-	 Stack<Note> statestack;//状态栈，存放每次的开始节点和终态节点
+	 Stack<Note> statestack;//状态栈，存放每次的开始节点和终态节点,lkmmmmmkml
 	LinkedList<NFA2> NFAlist ;
 	LinkedList<Character> charlist;
 	ReadFile rf=new ReadFile();
