@@ -1,29 +1,36 @@
 package test;
 
 import compiler.nfa.R2NFA;
-import compiler.nfa.entity.NFA2;
+import compiler.nfa.entity.NFA;
 import compiler.nfa.io.ReadFile;
 import compiler.util.MyLinkedList;
 
 public class Test1 {
 	public static void main(String args[]){
-		String s="(b.a)*#";
+		ReadFile rf = new ReadFile();
+		String s="(a|b)*(a.a|b.b)(a|b)*#";
 //		String s="a.b.c|e.g|r.h#";
 //		String s1="a|a.b#";
-		ReadFile.getReadFile().setFile(s);
-		String file=ReadFile.isCorrect();
+		rf.setFile(s);
+		String file=rf.isCorrect();
 		System.out.println(file);
-		ReadFile.row=0;
+		
 		new R2NFA(file).go();
-		NFA2 nfa;
-		System.out.println("存放NFA的队列长度:"+MyLinkedList.getNFAlist().size());
-		System.out.println(MyLinkedList.getNFAlist().getFirst().toString());
-//		for(int i=0;i<MyLinkedList.getNFAlist().size();i++){
-//			nfa=MyLinkedList.getNFAlist().getFirst();
-//			for(int j=0;j<=nfa.getFrom().length();j++){
-//				System.out.print("from :"+nfa.getFrom().charAt(j)+"| receive :"+nfa.getReceive().charAt(j)+"| to:"+nfa.getTo().charAt(j));
-//			}
-//		}
+		NFA nfa;
+		System.out.print("F");
+		System.out.print( " ___ " );
+		System.out.print("G");
+		System.out.print( " ___ " );
+		System.out.println("E");
+		for(int i=0;i<MyLinkedList.getNFAlist().size();i++){
+			nfa=MyLinkedList.getNFAlist().get(i);
+			
+			System.out.print(nfa.getFrom());
+			System.out.print( " --- " );
+			System.out.print(nfa.getReceive());
+			System.out.print( " --- " );
+			System.out.println(nfa.getTo());
+		}
 	}
 
 }
