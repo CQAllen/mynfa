@@ -6,17 +6,17 @@ import compiler.nfa.util.Priority;
 
 public class ReadFile {
      private  String file;
-     public static int row=0;
-	private static ReadFile readFile;
-     static {
-    	 
-    	 readFile = new ReadFile();
-     }
-     
-     
-     public static ReadFile getReadFile(){
-    	 return readFile;
-     }
+     public  int row=0;
+//	private static ReadFile readFile;
+//     static {
+//    	 
+//    	 readFile = new ReadFile();
+//     }
+//     
+//     
+//     public static ReadFile getReadFile(){
+//    	 return readFile;
+//     }
     
      public  String getFile() {
  		return file;
@@ -33,7 +33,7 @@ public class ReadFile {
  		}
  		System.out.println("filelength="+file.length());
  		System.out.println("row="+row);
- 		return ReadFile.getReadFile().file.charAt(row++);
+ 		return this.file.charAt(row++);
  		
  	}
  	public Character getCurrentChar(){
@@ -41,13 +41,13 @@ public class ReadFile {
  			
  			return null;
  		}
- 		return ReadFile.getReadFile().file.charAt(row);
+ 		return this.file.charAt(row);
  	}
  	public Character getLastChar(){
  		if(row<0){
  			return null;
  		}
- 		return ReadFile.getReadFile().file.charAt(--row);
+ 		return this.file.charAt(--row);
  	}
  	
  	public int returnto(int i){
@@ -55,7 +55,7 @@ public class ReadFile {
  		return row=row-i;
  	}
  	 static Character c;
-	public static  String isCorrect(){
+	public  String isCorrect(){
 		Stack<Character> stack= new Stack<Character>();
 		  
 		  StringBuffer sb=new StringBuffer();
@@ -63,15 +63,15 @@ public class ReadFile {
  		 int state=0;
  		 while(true){
  			 if(state==0){
- 			  c=ReadFile.getReadFile().getNextChar();
+ 			  c=this.getNextChar();
  			}
  			 if(c==null){
  				
  				 return null;
  			 } 
- 			 if(c=='|'&&(ReadFile.getReadFile().getCurrentChar()==')'||ReadFile.getReadFile().getCurrentChar()=='|'
- 				 ||ReadFile.getReadFile().getCurrentChar()=='*'||ReadFile.getReadFile().getCurrentChar()=='#'||
- 				ReadFile.getReadFile().getCurrentChar()=='.'))
+ 			 if(c=='|'&&(getCurrentChar()==')'||getCurrentChar()=='|'
+ 				 ||this.getCurrentChar()=='*'||getCurrentChar()=='#'||
+ 				getCurrentChar()=='.'))
  			      {
  				      return null;
  			      }
