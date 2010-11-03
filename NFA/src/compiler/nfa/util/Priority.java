@@ -63,7 +63,7 @@ public class Priority {
 		case '*': if(c2=='.'||c2=='|'||c2==')'||c2=='*'||c2=='#'||c2=='*'){
 			return 2;
 		}else if(c2=='('){
-			return -1;
+			return 2;
 		}
 		}
 		System.out.println("return 5");
