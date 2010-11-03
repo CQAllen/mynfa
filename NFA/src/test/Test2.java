@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import compiler.DFA.entity.DFA;
 import compiler.nfa.NFAtoDFA;
 import compiler.nfa.entity.NFA;
+import compiler.nfa.entity.NFA2;
 import compiler.util.MyLinkedList;
 /**
  * 
@@ -25,7 +26,7 @@ public class Test2 {
 		Cur.setReceive(new StringBuffer().append("#"));
 		Cur.setTo(new StringBuffer().append("1"));
 		List.add(Cur);
-		Cur = new NFA();
+		Cur = new NFA2();
 		Cur.setFrom(new StringBuffer().append("111"));
 		Cur.setReceive(new StringBuffer().append("#ab"));
 		Cur.setTo(new StringBuffer().append("211"));
