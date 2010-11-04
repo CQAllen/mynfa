@@ -34,6 +34,9 @@ public class NFA {
 	}
 	
 	public NFA connect(NFA nfa2){
+		/*
+		 * 且连接
+		 */
 //		NFA end= State.statestack.pop();
 //		NFA start = State.statestack.pop();//取出状态堆栈中的两个元素进行连接运算
 		
@@ -47,6 +50,9 @@ public class NFA {
 	}
 	
 	public NFA or(NFA n){
+		/*
+		 * 或连接
+		 */
 		//构造两个终太节点
 		Note start = new Note(State.weight++);
 		Note end = new Note(State.weight++);
@@ -69,6 +75,9 @@ public class NFA {
 	
 	
 	public  NFA bibao(){
+		/*
+		 * 闭包连接
+		 */
 		//先构造两 个新的开始节点个终态节点
 		Note start = new Note(State.weight++);
 		Note end = new Note(State.weight++);
