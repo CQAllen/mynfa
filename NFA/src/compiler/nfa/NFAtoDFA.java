@@ -3,6 +3,7 @@ package compiler.nfa;
 import java.util.LinkedList;
 
 import compiler.DFA.entity.DFA;
+import compiler.DFA.entity.DFA_Map;
 import compiler.nfa.entity.NFA;
 import compiler.util.MyLinkedList;
 
@@ -14,10 +15,17 @@ import compiler.util.MyLinkedList;
 
 public class NFAtoDFA {
 	// static NFA Cur = new NFA();
+	private static DFA Start;
+	private static DFA End;
+	private static Character DFA_Name = 'A';
+	private static Character Cur_ch;
 	private static MyLinkedList List;
-	private static LinkedList<LinkedList<Character>> States_Set = new LinkedList<LinkedList<Character>>();// DFA状态集
-	static int i;// 用于定位在NFA集合里的位置的指针
-	static int j;// 用于定位在NFA里的第几条元组的指针
+	private static LinkedList<DFA> DFA_Set =new LinkedList<DFA>();
+	private static LinkedList<DFA_Map> DFA_Map = new LinkedList<DFA_Map>();
+	private static LinkedList<LinkedList<Integer>> States_Set = new LinkedList<LinkedList<Integer>>();// DFA状态集
+	private static LinkedList<Character> Receive_List = new LinkedList<Character>();
+	static int i;// 用于定位在NFA集合里的指针
+	static int j;// 用于定位在States_Set集合里的指针
 
 	public static void setList(MyLinkedList list) {
 		List = list;
@@ -30,70 +38,113 @@ public class NFAtoDFA {
 	public static void run(MyLinkedList List) {
 		System.out.println("获取到一个MyLinkedList");
 		System.out.println("长度为：" + List.size() + "\n");
-		LinkedList<Character> Temp_list = new LinkedList<Character>();
+		LinkedList<Integer> Temp_list = new LinkedList<Integer>();
 		NFAtoDFA.setList(List);
-		Temp_list = NFAtoDFA.Clourse(List.getFirst(), Temp_list);
+		getReceive_Set();
+		System.out.print("符号集合为:");
+		Print(Receive_List);
+		Temp_list = NFAtoDFA.Clourse(List.get(0), Temp_list);
+		System.out.print("当前：");
 		Print(Temp_list);
 		// addStates_Set(Temp_list);
 		States_Set.add(Temp_list);
-		Temp_list = new LinkedList<Character>();
-		Change(States_Set.getFirst(), 'a', Temp_list);
-		Temp_list = new LinkedList<Character>();
-		Change(States_Set.getFirst(), 'b', Temp_list);
+		Temp_list = new LinkedList<Integer>();
+		ChangeService(States_Set.get(j), Receive_List, Temp_list);
+		// Change(States_Set.getFirst(), 'a', Temp_list);
+		// Temp_list = new LinkedList<Integer>();
+		// Change(States_Set.getFirst(), 'b', Temp_list);
 		System.out.println(States_Set.size());
 		for (int k = 0; k < States_Set.size(); k++)
 			Print(States_Set.get(k));
 	}
 
-	private static void addStates_Set(LinkedList<Character> tempList) {// 插入DFA状态集,重复的不会被插入
+	private static void ChangeService(LinkedList<Integer> first,
+			LinkedList<Character> receiveList, LinkedList<Integer> tempList) {
+		// TODO Auto-generated method stub
+		if (j < States_Set.size()) {
+			// Print(States_Set);
+			for (int index = 0; index < receiveList.size(); index++) {
+				Change(first, receiveList.get(index), tempList);
+				tempList = new LinkedList<Integer>();
+			}
+			ChangeService(States_Set.get(j++), receiveList, tempList);
+		} else
+			return;
+	}
+
+	private static void getReceive_Set() {
+		// TODO Auto-generated method stub
+		for (int index = 0; index < getList().size(); index++) {
+			if (Check(Receive_List, getList().get(index).getReceive())
+					&& getList().get(index).getReceive() != '#')
+				Receive_List.add(getList().get(index).getReceive());
+		}
+	}
+
+	private static boolean addStates_Set(LinkedList<Integer> tempList) {// 插入DFA状态集,重复的不会被插入
 		// TODO Auto-generated method stub
 		for (int m = 0; m < States_Set.size(); m++) {
-			if (States_Set.size() == tempList.size())
+			if (States_Set.get(m).size() == tempList.size()) {
 				for (int n = 0; n < States_Set.get(m).size(); n++)
 					if (States_Set.get(m).get(n) == tempList.get(n)) {
-						// States_Set.add(tempList);
-						// System.out.println("");
-						continue;
+						if (n + 1 < tempList.size()) {
+							continue;
+						} else {// 完全相等并指向了最后一个元素
+							return false;
+						}
 					} else {
 						break;
 					}
-			else
+			} else
 				continue;
 		}
+		System.out.println("转化：" + Cur_ch);
 		States_Set.add(tempList);
+		System.out.print("集合：");
+		Print(States_Set);
+		return true;
 	}
 
-	private static void Print(LinkedList<Character> List) {
+	private static void Print(LinkedList tempList) {
 		// TODO Auto-generated method stub
 		System.out.print("{ ");
-		for (int index = 0; index < List.size(); index++)
-			System.out.print(List.get(index).toString() + " ");
+		for (int index = 0; index < tempList.size(); index++)
+			System.out.print(tempList.get(index).toString() + " ");
 		System.out.println("}");
 	}
 
-	public static LinkedList<Character> Clourse(NFA cur,
-			LinkedList<Character> Temp_list) {// ε_Clourse闭包
+	public static LinkedList<Integer> Clourse(NFA cur,
+			LinkedList<Integer> Temp_list) {// ε_Clourse闭包
 		// TODO Auto-generated method stub
 		// System.out.println(i+" "+j);
 		boolean Continue = false;
-		if (Check(Temp_list, cur.getFrom().charAt(0)))
-			Temp_list.add(cur.getFrom().charAt(0));
-		for (int index = 0; index < cur.getReceive().length(); index++)
-			if (cur.getReceive().charAt(index) == '#') {
-				System.out.println(cur.getFrom().charAt(index) + " recieve "
-						+ cur.getReceive().charAt(index) + " to "
-						+ cur.getTo().charAt(index));
-				Temp_list.add(cur.getTo().charAt(index));
-				Continue = Search(cur.getTo().charAt(index), '#');
-				if (Continue)
-					Clourse(getList().get(i), Temp_list);
-				else
-					return Temp_list;
-			} else {
-				continue;
-			}
+		if (Check(Temp_list, cur.getFrom()))
+			Temp_list.add(cur.getFrom());
+		// for (int index = 0; index < cur.getReceive().length(); index++)
+		if (cur.getReceive() == '#') {
+			System.out.println(cur.getFrom() + " recieve " + cur.getReceive()
+					+ " to " + cur.getTo());
+			Temp_list.add(cur.getTo());
+			Continue = Search(cur.getTo(), '#');
+			if (Continue)
+				Clourse(getList().get(i), Temp_list);
+			else
+				return Temp_list;
+		}
+		// else {
+		// continue;
+		// }
 		return Temp_list;
 
+	}
+
+	private static boolean Check(LinkedList<Integer> Temp_list, int l) {// 查看是否有重复元素
+		// TODO Auto-generated method stub
+		for (int k = 0; k < Temp_list.size(); k++) {
+			if (Temp_list.get(k) == l)
+				return false;// 找到重复元素
+		}
+		return true;// 没有找到重复元素
 	}
 
 	private static boolean Check(LinkedList<Character> Temp_list, Character ch) {// 查看是否有重复元素
@@ -105,46 +156,100 @@ public class NFAtoDFA {
 		return true;// 没有找到重复元素
 	}
 
-	public static void Change(LinkedList<Character> list, Character ch,
-			LinkedList<Character> Temp_list) {// X弧转化
+	public static void Change(LinkedList<Integer> list, Character ch,
+			LinkedList<Integer> Temp_list) {// X弧转化
 		// TODO Auto-generated method stub
+		Start = CreateDFA(list);//构造开始DFA节点
 		for (int index = 0; index < list.size(); index++) {
 			if (Search(list.get(index), ch)) {
-				System.out.println(getList().get(i).getFrom().charAt(j)
-						+ " recieve " + getList().get(i).getReceive().charAt(j)
-						+ " to " + getList().get(i).getTo().charAt(j));
-				if (Check(Temp_list, getList().get(i).getTo().charAt(j)))
-					Temp_list.add(getList().get(i).getTo().charAt(j));
-				ChangeNull(getList().get(i).getTo().charAt(j), '#', Temp_list);
+				System.out.println(getList().get(i).getFrom() + " recieve "
+						+ getList().get(i).getReceive() + " to "
+						+ getList().get(i).getTo());
+				Cur_ch = ch;
+				if (Check(Temp_list, getList().get(i).getTo()))
+					Temp_list.add(getList().get(i).getTo());
+				ChangeNull(getList().get(i).getTo(), '#', Temp_list);
 			} else
 				continue;
 		}
+		System.out.print("当前：");
 		Print(Temp_list);
+		End = CreateDFA(Temp_list);//构造结束DFA节点
+
+		DFA_Map temp = new DFA_Map();
+		temp.setStart(Start);
+		temp.setEnd(End);
+		temp.setChange(Cur_ch);
+		DFA_Map.add(temp);
+		PrintDFA_Map(DFA_Map);
+		
 		addStates_Set(Temp_list);
+//		if (addStates_Set(Temp_list)) {
+//			Start = CreateDFA(list);
+//			End = CreateDFA(Temp_list);
+//			DFA_Map temp = new DFA_Map();
+//			temp.setStart(Start);
+//			temp.setEnd(End);
+//			temp.setChange(Cur_ch);
+//			DFA_Map.add(temp);
+//			PrintDFA_Map(DFA_Map);
+//		}
 	}
 
-	private static void ChangeNull(Character from, Character receive,
-			LinkedList<Character> Temp_list) {
+	private static void PrintDFA_Map(LinkedList<DFA_Map> DFAMap) {
+		// TODO Auto-generated method stub
+		for (int index = 0; index < DFAMap.size(); index++) {
+			System.out.println("\t"
+					+ DFAMap.get(index).getStart().getDFA_Name() + " receive "
+					+ DFAMap.get(index).getChange() + " to "
+					+ DFAMap.get(index).getEnd().getDFA_Name());
+		}
+	}
+
+	private static DFA CreateDFA(LinkedList<Integer> list) {
+		// TODO Auto-generated method stub
+		DFA Cur = new DFA();
+		for (int index = 0; index < list.size(); index++) {
+			if (list.get(index) == 0) {
+				Cur.setIsStart(true);
+			}
+			if (list.get(index) == -1)
+				Cur.setIsEnd(true);
+		}
+		if (!Cur.isIsStart()) {
+			Cur.setDFA_Name(DFA_Name);
+			DFA_Name++;
+		}
+		Cur.setStates(list);
+		return Cur;
+	}
+
+	private static void ChangeNull(int from, Character receive,
+			LinkedList<Integer> Temp_list) {
 		// TODO Auto-generated method stub
 		if (Search(from, receive)) {
-			System.out.println(getList().get(i).getFrom().charAt(j)
-					+ " recieve " + getList().get(i).getReceive().charAt(j)
-					+ " to " + getList().get(i).getTo().charAt(j));
-			if (Check(Temp_list, getList().get(i).getTo().charAt(j)))
-				Temp_list.add(getList().get(i).getTo().charAt(j));
-			ChangeNull(getList().get(i).getTo().charAt(j), '#', Temp_list);
+			System.out.println(getList().get(i).getFrom() + " recieve "
+					+ getList().get(i).getReceive() + " to "
+					+ getList().get(i).getTo());
+			if (Check(Temp_list, getList().get(i).getTo()))
+				Temp_list.add(getList().get(i).getTo());
+			ChangeNull(getList().get(i).getTo(), '#', Temp_list);
 		} else
 			return;
 	}
 
-	private static boolean Search(Character from, Character receieve) {// 查找并定位ij指针
+	private static boolean Search(int from, Character receieve) {// 查找并定位i指针
 		// TODO Auto-generated method stub
 		for (i = 0; i < getList().size(); i++) {
-			for (j = 0; j < getList().get(i).getFrom().length(); j++) {
-				if (getList().get(i).getFrom().charAt(j) == from
-						&& getList().get(i).getReceive().charAt(j) == receieve)
-					return true;
-
+			if (getList().get(i).getFrom() == from
+					&& getList().get(i).getReceive() == receieve) {
+				// System.out.println(getList().get(i).getFrom() + " "
+				// + getList().get(i).getReceive());
+				return true;
+			} else {
+				// System.out.println(getList().get(i).getFrom() + " "
+				// + getList().get(i).getReceive());
+				continue;
 			}
 		}
 		return false;

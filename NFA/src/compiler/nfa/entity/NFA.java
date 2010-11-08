@@ -14,6 +14,9 @@ public class NFA {
 		this.receive=receive;
 		this.to=to;
 	}
+	public NFA() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getFrom() {
 		return from;
 	}

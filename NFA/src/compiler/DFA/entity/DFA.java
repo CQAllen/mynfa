@@ -8,26 +8,26 @@ import java.util.LinkedList;
  */
 
 public class DFA {
-	private LinkedList<Character> States;
-	private String DFA_Name;
-	private boolean IsStart;
-	private boolean IsEnd;
+	private LinkedList<Integer> States;
+	private Character DFA_Name='S';
+	private boolean IsStart=false;
+	private boolean IsEnd=false;
 
-	public LinkedList<Character> getStates() {
+	public LinkedList<Integer> getStates() {
 		if(States==null)
-			States=new LinkedList<Character>();
+			States=new LinkedList<Integer>();
 		return States;
 	}
 
-	public void setStates(LinkedList<Character> states) {
+	public void setStates(LinkedList<Integer> states) {
 		this.States = states;
 	}
 
-	public String getDFA_Name() {
+	public Character getDFA_Name() {
 		return DFA_Name;
 	}
 
-	public void setDFA_Name(String dFAName) {
+	public void setDFA_Name(Character dFAName) {
 		DFA_Name = dFAName;
 	}
 
