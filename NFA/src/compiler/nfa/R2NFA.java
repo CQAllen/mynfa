@@ -31,12 +31,7 @@ public class R2NFA {
 			NFAlist.push(nfa);//一条弧入队列
 			State.statestack.push(nfa);//状态堆栈中也要放入
 			//构造新的开始节点和终态节点，将其放入 状态栈
-			System.out.println("刚入队列的弧");
-			System.out.print(NFAlist.peek().getFrom());
-			System.out.print("__");
-			System.out.print(NFAlist.peek().getReceive());
-			System.out.print("__");
-			System.out.println(NFAlist.peek().getTo());
+			
 			
 			
 		}

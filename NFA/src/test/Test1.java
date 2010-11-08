@@ -8,9 +8,9 @@ import compiler.util.MyLinkedList;
 public class Test1 {
 	public static void main(String args[]){
 		ReadFile rf = new ReadFile();
-		String s="(a|b)*.(a.a|b.b)#";
+		String s="(a|b)*.(a.a|b.b)(a|b)*#";
 //		String s="a.b.c|e.g|r.h#";
-//		String s1="a|a.b#";
+//		String s="a*#";
 		rf.setFile(s);
 		String file=rf.isCorrect();
 		System.out.println(file);
