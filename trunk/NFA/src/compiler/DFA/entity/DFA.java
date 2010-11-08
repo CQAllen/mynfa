@@ -1,21 +1,32 @@
 package compiler.DFA.entity;
 
 import java.util.LinkedList;
+
 /**
  * 
  * @author Allen
- *
+ * 
  */
 
 public class DFA {
-	private LinkedList<Integer> States;
-	private Character DFA_Name='S';
-	private boolean IsStart=false;
-	private boolean IsEnd=false;
+	private LinkedList<Integer> States = new LinkedList<Integer>();
+	private Character DFA_Name = 'S';
+	private boolean IsStart = false;
+	private boolean IsEnd = false;
+
+	// private int size=States.size();
+
+	public DFA() {
+
+	}
+
+	public DFA(Character name) {
+		DFA_Name = name;
+	}
 
 	public LinkedList<Integer> getStates() {
-		if(States==null)
-			States=new LinkedList<Integer>();
+		if (States == null)
+			States = new LinkedList<Integer>();
 		return States;
 	}
 
@@ -45,6 +56,20 @@ public class DFA {
 
 	public void setIsEnd(boolean isEnd) {
 		IsEnd = isEnd;
+	}
+
+	public int equals(DFA dfa1, DFA dfa2) {
+		int index;
+		if (dfa1.States.size() == dfa2.States.size()) {
+			for (index = 0; index < dfa1.States.size(); index++) {
+				if (dfa1.States.get(index) == dfa2.States.get(index)) {
+					continue;
+				} else
+					return -1;
+			}
+			return index;
+		} else
+			return -1;
 	}
 
 }

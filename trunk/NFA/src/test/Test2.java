@@ -1,7 +1,6 @@
 package test;
 
-import java.util.LinkedList;
-import compiler.DFA.entity.DFA;
+
 import compiler.nfa.NFAtoDFA;
 import compiler.nfa.entity.NFA;
 import compiler.util.MyLinkedList;
