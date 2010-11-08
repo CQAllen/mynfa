@@ -18,4 +18,5 @@ public class MyLinkedList extends LinkedList<NFA>{
    public  static MyLinkedList getNFAlist(){
 	   return NFAlist;
    }
+   
 }

@@ -41,6 +41,7 @@ public class NFA {
 //		NFA start = State.statestack.pop();//取出状态堆栈中的两个元素进行连接运算
 		
 		NFA nfa=new NFA(to,'#',nfa2.getFrom());
+//		MyLinkedList.getNFAlist().add(1, nfa);
 		MyLinkedList.getNFAlist().push(nfa);
 		//将刚才进行连接的两个nfa和成一个整体
 		NFA all=new NFA(from,'-',nfa2.getTo());

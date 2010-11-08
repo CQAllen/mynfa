@@ -66,7 +66,7 @@ public class Priority {
 			return 2;
 		}
 		}
-		System.out.println("return 5");
+		
 		return 5;
 	}
 

@@ -7,16 +7,7 @@ import compiler.nfa.util.Priority;
 public class ReadFile {
      private  String file;
      public  int row=0;
-//	private static ReadFile readFile;
-//     static {
-//    	 
-//    	 readFile = new ReadFile();
-//     }
-//     
-//     
-//     public static ReadFile getReadFile(){
-//    	 return readFile;
-//     }
+
     
      public  String getFile() {
  		return file;
@@ -54,7 +45,15 @@ public class ReadFile {
  		
  		return row=row-i;
  	}
+ 	
+ 	
  	 static Character c;
+ 	 public boolean isin(Character c){
+ 		 if(('a'<=c&&c<='z')||(c>='A'&&c<='Z')||(c>=0&&c<=9)||c=='.'||c=='|'||c=='*'||c=='#'){
+ 			 return true;
+ 		 }
+ 		return false;
+ 	}
 	public  String isCorrect(){
 		Stack<Character> stack= new Stack<Character>();
 		  
@@ -76,7 +75,16 @@ public class ReadFile {
  				      return null;
  			      }
  			 
-// 			 System.out.println(Priority.getPriority().isFrist(stack.peek(),c));
+ 			if(!isin(c))//检查是否有非法字符
+			      {
+				      return null;
+			      }
+ 			//字符之间没有输入符号
+ 			if((('a'<=c&&c<='z')||(c>='A'&&c<='Z'))&&(('a'<=getCurrentChar()&&getCurrentChar()<='z')||(getCurrentChar()>='A'&&getCurrentChar()<='Z'))){
+ 				return null;
+ 			}
+            	  
+            
  			 
  		  switch(Priority.getPriority().isFrist(stack.peek(),c)){
  		  
