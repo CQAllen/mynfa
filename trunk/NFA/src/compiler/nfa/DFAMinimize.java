@@ -20,4 +20,13 @@ public class DFAMinimize {
 	public DFAMinimize(List<DFA_Map> DFA_Map) {
 		this.DFA_Map = DFA_Map;
 	}
+
+	/**
+	 * 返回最小化之后的DFA
+	 * 
+	 * @return
+	 */
+	public List<DFA_Map> minimizing() {
+		return null;
+	}
 }
