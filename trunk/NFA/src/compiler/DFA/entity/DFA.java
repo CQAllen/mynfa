@@ -1,6 +1,7 @@
 package compiler.DFA.entity;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * 
@@ -11,8 +12,8 @@ import java.util.LinkedList;
 public class DFA {
 	private LinkedList<Integer> States = new LinkedList<Integer>();
 	private Character DFA_Name = 'S';
-	private boolean IsStart = false;
-	private boolean IsEnd = false;
+	private boolean Start = false;
+	private boolean End = false;
 
 	// private int size=States.size();
 
@@ -42,20 +43,20 @@ public class DFA {
 		DFA_Name = dFAName;
 	}
 
-	public boolean isIsStart() {
-		return IsStart;
+	public boolean isStart() {
+		return Start;
 	}
 
-	public void setIsStart(boolean isStart) {
-		IsStart = isStart;
+	public void setIsStart(boolean Start) {
+		this.Start = Start;
 	}
 
-	public boolean isIsEnd() {
-		return IsEnd;
+	public boolean isEnd() {
+		return End;
 	}
 
-	public void setIsEnd(boolean isEnd) {
-		IsEnd = isEnd;
+	public void setIsEnd(boolean End) {
+		this.End = End;
 	}
 
 	public int equals(DFA dfa1, DFA dfa2) {
@@ -72,4 +73,16 @@ public class DFA {
 			return -1;
 	}
 
+	@Override
+	public int hashCode() {
+		int a = 13;
+		Random ran = new Random();
+		a *= (States.size() + 7) * ran.nextInt();
+		if (Start) {
+			a *= 17;
+		} else {
+			a *= 19;
+		}
+		return a;
+	}
 }
