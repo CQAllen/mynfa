@@ -14,7 +14,6 @@ import compiler.util.MyLinkedList;
  */
 
 public class NFAtoDFA {
-	// static NFA Cur = new NFA();
 	private static DFA Start;
 	private static DFA End;
 	private static Character DFA_Name = 'A';
@@ -26,7 +25,12 @@ public class NFAtoDFA {
 	private static LinkedList<Character> Receive_List = new LinkedList<Character>();
 	static int i;// 用于定位在NFA集合里的指针
 	static int j;// 用于定位在States_Set集合里的指针
-	static int k=-1;// 用于定位在DFA_Set集合里的指针
+	static int k = -1;// 用于定位在DFA_Set集合里的查找指针
+	static int point = 0;// DFA_Set集合里当前指针
+
+	public static LinkedList<DFA_Map> getDFA_Map() {
+		return DFA_Map;
+	}
 
 	public static void setList(MyLinkedList list) {
 		List = list;
@@ -49,23 +53,34 @@ public class NFAtoDFA {
 		Print(Temp_list);
 		// addStates_Set(Temp_list);
 		States_Set.add(Temp_list);
-		// DFA temp = new DFA('S');
-		// DFA_Set.add(temp);
+		// createStartDFA('S',Temp_list);
+		DFA temp = new DFA('S');
+		temp.setStates(Temp_list);
+		temp.check();
+		System.out.println("Start " + temp.isStart() + " End " + temp.isEnd());
+		DFA_Set.add(temp);
 		Temp_list = new LinkedList<Integer>();
 		ChangeService(States_Set.get(j), Receive_List, Temp_list);
-		// Change(States_Set.getFirst(), 'a', Temp_list);
-		// Temp_list = new LinkedList<Integer>();
-		// Change(States_Set.getFirst(), 'b', Temp_list);
 		System.out.println(States_Set.size());
 		for (int k = 0; k < States_Set.size(); k++)
 			Print(States_Set.get(k));
 	}
 
+	private static DFA createStartDFA(Character c, LinkedList<Integer> tempList) {
+		// TODO Auto-generated method stub
+		DFA temp = new DFA(c);
+		temp.setStates(tempList);
+		temp.check();
+		System.out.println("Start " + temp.isStart() + " End " + temp.isEnd());
+		return temp;
+	}
+
 	private static void ChangeService(LinkedList<Integer> first,
 			LinkedList<Character> receiveList, LinkedList<Integer> tempList) {
 		// TODO Auto-generated method stub
+
+		Start = createStartDFA(DFA_Set.get(point++).getDFA_Name(), first);
 		if (j < States_Set.size()) {
-			// Print(States_Set);
 			for (int index = 0; index < receiveList.size(); index++) {
 				Change(first, receiveList.get(index), tempList);
 				tempList = new LinkedList<Integer>();
@@ -121,11 +136,9 @@ public class NFAtoDFA {
 	public static LinkedList<Integer> Clourse(NFA cur,
 			LinkedList<Integer> Temp_list) {// ε_Clourse闭包
 		// TODO Auto-generated method stub
-		// System.out.println(i+" "+j);
 		boolean Continue = false;
 		if (Check(Temp_list, cur.getFrom()))
 			Temp_list.add(cur.getFrom());
-		// for (int index = 0; index < cur.getReceive().length(); index++)
 		if (cur.getReceive() == '#') {
 			System.out.println(cur.getFrom() + " recieve " + cur.getReceive()
 					+ " to " + cur.getTo());
@@ -136,9 +149,6 @@ public class NFAtoDFA {
 			else
 				return Temp_list;
 		}
-		// else {
-		// continue;
-		// }
 		return Temp_list;
 
 	}
@@ -166,9 +176,6 @@ public class NFAtoDFA {
 		// TODO Auto-generated method stub
 		System.out.print("\t");
 		Print(list);
-		Start = CreateDFA(list,true);// 构造开始DFA节点
-		 add_DFA_Set(Start);
-//		DFA_Set.add(Start);
 		System.out.println("\t" + DFA_Set.size());
 		for (int index = 0; index < list.size(); index++) {
 			if (Search(list.get(index), ch)) {
@@ -184,17 +191,8 @@ public class NFAtoDFA {
 		}
 		System.out.print("当前：");
 		Print(Temp_list);
-		// DFA temp = new DFA(Cur_ch);
-		// if (!contain(DFA_Set, temp.getDFA_Name())) {// 未包含
-		End = CreateDFA(Temp_list,false);// 构造结束DFA节点
-		 add_DFA_Set(End);
-//		DFA_Set.add(End);
-		// // DFA_Set.add(new DFA(temp.getDFA_Name()));
-		// // Cur_ch++;
-		// } else {// 包含
-		//
-		// }
-
+		End = CreateEndDFA(Temp_list);// 构造结束DFA节点
+		add_DFA_Set(End);
 		DFA_Map tempMap = new DFA_Map();
 		tempMap.setStart(Start);
 		tempMap.setEnd(End);
@@ -203,33 +201,14 @@ public class NFAtoDFA {
 		PrintDFA_Map(DFA_Map);
 
 		addStates_Set(Temp_list);
-		// if (addStates_Set(Temp_list)) {
-		// Start = CreateDFA(list);
-		// End = CreateDFA(Temp_list);
-		// DFA_Map temp = new DFA_Map();
-		// temp.setStart(Start);
-		// temp.setEnd(End);
-		// temp.setChange(Cur_ch);
-		// DFA_Map.add(temp);
-		// PrintDFA_Map(DFA_Map);
-		// }
+		// for (int index = 0; index < DFA_Set.size(); index++)
+		// System.out.println(DFA_Set.get(index).getDFA_Name());
 	}
-
-	// private static boolean contain(LinkedList<DFA> DFASet, Character curCh)
-	// {// 查找DFA_Set里是否包含当前DFA状态
-	// // TODO Auto-generated method stub
-	// for (int index = 0; index < DFASet.size(); index++) {
-	// if (DFASet.get(index).getDFA_Name() == curCh) {
-	// return true;
-	// }
-	// }
-	// return false;
-	// }
 
 	private static void add_DFA_Set(DFA dfa) {
 		// TODO Auto-generated method stub
 		for (int index = 0; index < DFA_Set.size(); index++) {
-			if (DFA_Set.get(index).equals(DFA_Set.get(index), dfa) >= 0)
+			if (DFA_Set.get(index).equals(DFA_Set.get(index), dfa))
 				return;
 			else
 				continue;
@@ -247,43 +226,32 @@ public class NFAtoDFA {
 		}
 	}
 
-	private static DFA CreateDFA(LinkedList<Integer> list,boolean IsStart) {
+	private static DFA CreateEndDFA(LinkedList<Integer> list) {
 		// TODO Auto-generated method stub
 		DFA Cur = new DFA();
-		for (int index = 0; index < list.size(); index++) {
-			if (list.get(index) == 0) {
-				Cur.setIsStart(true);
-				Print(list);
-				System.out.println("true");
-
-			}
-			if (list.get(index) == -1)
-				Cur.setIsEnd(true);
-		}
 		Cur.setStates(list);
-		if (!Cur.isStart()) {
-			if (DFA_Set.size() != 0)
-				if (contain(Cur)&&!IsStart)
-					Cur.setDFA_Name(DFA_Set.get(k).getDFA_Name());
-				else {
-					Cur.setDFA_Name(DFA_Name);
-					DFA_Name++;
-					DFA_Set.add(Cur);
-				}
-		} 
+		Cur.check();
+		if (contain(Cur)) {
+			Cur.setDFA_Name(DFA_Set.get(k).getDFA_Name());
+//			System.out.println("____*" + DFA_Set.get(k).getDFA_Name());
+		} else {
+//			System.out.println("____" + DFA_Name);
+			Cur.setDFA_Name(DFA_Name);
+			DFA_Name++;
+			DFA_Set.add(Cur);
+		}
 		return Cur;
 	}
 
 	private static boolean contain(DFA Cur) {
 		// TODO Auto-generated method stub
 		for (int index = 0; index < DFA_Set.size(); index++) {
-			int num = DFA_Set.get(index).equals(DFA_Set.get(index), Cur);
-			if (num < 0) {// 不包含
+			if (!DFA_Set.get(index).equals(DFA_Set.get(index), Cur)) {// 不包含
 				continue;
 			} else {
-				System.out.println("找到相同元素");
-				System.out.println("k："+k);
-				k = num;
+//				System.out.println("找到相同元素");
+//				System.out.println("index：" + index);
+				k = index;
 				return true;
 			}
 		}

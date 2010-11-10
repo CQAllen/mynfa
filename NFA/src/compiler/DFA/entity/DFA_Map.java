@@ -28,5 +28,8 @@ public class DFA_Map {
 	public void setChange(Character change) {
 		Change = change;
 	}
+//	public DFA SearchEndDFA(){
+//		
+//	}
 
 }

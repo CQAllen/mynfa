@@ -10,19 +10,25 @@ import java.util.Random;
  */
 
 public class DFA {
-	private LinkedList<Integer> States = new LinkedList<Integer>();
-	private Character DFA_Name = 'S';
-	private boolean Start = false;
-	private boolean End = false;
+	private LinkedList<Integer> States;
+	private Character DFA_Name;
+	private boolean Start;
+	private boolean End;
 
 	// private int size=States.size();
 
 	public DFA() {
-
+		States = new LinkedList<Integer>();
+		DFA_Name = 'S';
+		Start = false;
+		End = false;
 	}
 
 	public DFA(Character name) {
+		States = new LinkedList<Integer>();
 		DFA_Name = name;
+		Start = false;
+		End = false;
 	}
 
 	public LinkedList<Integer> getStates() {
@@ -47,30 +53,48 @@ public class DFA {
 		return Start;
 	}
 
-	public void setIsStart(boolean Start) {
+	public void setStart(boolean Start) {
 		this.Start = Start;
+	}
+
+	public void check() {
+		checkStart();
+		checkEnd();
+	}
+
+	public void checkStart() {
+		for (int index = 0; index < this.States.size(); index++)
+			if (this.States.get(index) == 0)
+				this.Start = true;
+	}
+
+	public void checkEnd() {
+		for (int index = 0; index < this.States.size(); index++)
+			if (this.States.get(index) == -1)
+				this.End = true;
+
 	}
 
 	public boolean isEnd() {
 		return End;
 	}
 
-	public void setIsEnd(boolean End) {
+	public void setEnd(boolean End) {
 		this.End = End;
 	}
 
-	public int equals(DFA dfa1, DFA dfa2) {
+	public boolean equals(DFA dfa1, DFA dfa2) {
 		int index;
 		if (dfa1.States.size() == dfa2.States.size()) {
 			for (index = 0; index < dfa1.States.size(); index++) {
 				if (dfa1.States.get(index) == dfa2.States.get(index)) {
 					continue;
 				} else
-					return -1;
+					return false;
 			}
-			return index;
+			return true;
 		} else
-			return -1;
+			return false;
 	}
 
 	@Override
