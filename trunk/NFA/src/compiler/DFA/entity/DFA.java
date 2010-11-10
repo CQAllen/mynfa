@@ -97,6 +97,22 @@ public class DFA {
 			return false;
 	}
 
+	public static boolean compare(DFA dfa1, DFA dfa2) {
+		if (!dfa1.getDFA_Name().equals(dfa2.getDFA_Name())) {
+			return false;
+		}
+		if (dfa1.getStates().size() != dfa2.getStates().size()) {
+			return false;
+		}
+		if (dfa1.End != dfa2.End) {
+			return false;
+		}
+		if (dfa1.Start != dfa2.Start) {
+			return false;
+		}
+		return true;
+	}
+
 	@Override
 	public int hashCode() {
 		int a = 13;
