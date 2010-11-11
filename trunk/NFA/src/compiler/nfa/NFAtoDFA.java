@@ -233,9 +233,9 @@ public class NFAtoDFA {
 		Cur.check();
 		if (contain(Cur)) {
 			Cur.setDFA_Name(DFA_Set.get(k).getDFA_Name());
-//			System.out.println("____*" + DFA_Set.get(k).getDFA_Name());
+			// System.out.println("____*" + DFA_Set.get(k).getDFA_Name());
 		} else {
-//			System.out.println("____" + DFA_Name);
+			// System.out.println("____" + DFA_Name);
 			Cur.setDFA_Name(DFA_Name);
 			DFA_Name++;
 			DFA_Set.add(Cur);
@@ -249,8 +249,8 @@ public class NFAtoDFA {
 			if (!DFA_Set.get(index).equals(DFA_Set.get(index), Cur)) {// 不包含
 				continue;
 			} else {
-//				System.out.println("找到相同元素");
-//				System.out.println("index：" + index);
+				// System.out.println("找到相同元素");
+				// System.out.println("index：" + index);
 				k = index;
 				return true;
 			}
@@ -287,5 +287,9 @@ public class NFAtoDFA {
 			}
 		}
 		return false;
+	}
+
+	public static LinkedList<DFA> getDFA_Set() {
+		return DFA_Set;
 	}
 }
